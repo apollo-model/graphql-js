@@ -12,7 +12,7 @@ import { GraphQLError } from '../error/GraphQLError';
 import { type ASTNode, type NamedTypeNode } from '../language/ast';
 
 import { isValidNameError } from '../utilities/assertValidName';
-import { isEqualType, isTypeSubTypeOf } from '../utilities/typeComparators';
+import { isTypeSubTypeOf } from '../utilities/typeComparators';
 
 import { isDirective } from './directives';
 import { isIntrospectionType } from './introspection';
@@ -395,21 +395,21 @@ function validateObjectImplementsInterface(
         continue;
       }
 
-      // Assert interface field arg type matches object field arg type.
-      // (invariant)
-      // TODO: change to contravariant?
-      if (!isEqualType(ifaceArg.type, objectArg.type)) {
-        context.reportError(
-          `Interface field argument ${iface.name}.${fieldName}(${argName}:) ` +
-            `expects type ${inspect(ifaceArg.type)} but ` +
-            `${object.name}.${fieldName}(${argName}:) is type ` +
-            `${inspect(objectArg.type)}.`,
-          [
-            ifaceArg.astNode && ifaceArg.astNode.type,
-            objectArg.astNode && objectArg.astNode.type,
-          ],
-        );
-      }
+      // // Assert interface field arg type matches object field arg type.
+      // // (invariant)
+      // // TODO: change to contravariant?
+      // if (!isEqualType(ifaceArg.type, objectArg.type)) {
+      //   context.reportError(
+      //     `Interface field argument ${iface.name}.${fieldName}(${argName}:) ` +
+      //       `expects type ${inspect(ifaceArg.type)} but ` +
+      //       `${object.name}.${fieldName}(${argName}:) is type ` +
+      //       `${inspect(objectArg.type)}.`,
+      //     [
+      //       ifaceArg.astNode && ifaceArg.astNode.type,
+      //       objectArg.astNode && objectArg.astNode.type,
+      //     ],
+      //   );
+      // }
 
       // TODO: validate default values?
     }

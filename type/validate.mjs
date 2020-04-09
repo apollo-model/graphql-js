@@ -5,7 +5,7 @@ import objectEntries from '../polyfills/objectEntries';
 import inspect from '../jsutils/inspect';
 import { GraphQLError } from '../error/GraphQLError';
 import { isValidNameError } from '../utilities/assertValidName';
-import { isEqualType, isTypeSubTypeOf } from '../utilities/typeComparators';
+import { isTypeSubTypeOf } from '../utilities/typeComparators';
 import { isDirective } from './directives';
 import { isIntrospectionType } from './introspection';
 import { assertSchema } from './schema';
@@ -323,14 +323,22 @@ function validateObjectImplementsInterface(context, object, iface) {
       if (!objectArg) {
         context.reportError("Interface field argument ".concat(iface.name, ".").concat(fieldName, "(").concat(argName, ":) expected but ").concat(object.name, ".").concat(fieldName, " does not provide it."), [ifaceArg.astNode, objectField.astNode]);
         return "continue";
-      } // Assert interface field arg type matches object field arg type.
-      // (invariant)
-      // TODO: change to contravariant?
-
-
-      if (!isEqualType(ifaceArg.type, objectArg.type)) {
-        context.reportError("Interface field argument ".concat(iface.name, ".").concat(fieldName, "(").concat(argName, ":) ") + "expects type ".concat(inspect(ifaceArg.type), " but ") + "".concat(object.name, ".").concat(fieldName, "(").concat(argName, ":) is type ") + "".concat(inspect(objectArg.type), "."), [ifaceArg.astNode && ifaceArg.astNode.type, objectArg.astNode && objectArg.astNode.type]);
-      } // TODO: validate default values?
+      } // // Assert interface field arg type matches object field arg type.
+      // // (invariant)
+      // // TODO: change to contravariant?
+      // if (!isEqualType(ifaceArg.type, objectArg.type)) {
+      //   context.reportError(
+      //     `Interface field argument ${iface.name}.${fieldName}(${argName}:) ` +
+      //       `expects type ${inspect(ifaceArg.type)} but ` +
+      //       `${object.name}.${fieldName}(${argName}:) is type ` +
+      //       `${inspect(objectArg.type)}.`,
+      //     [
+      //       ifaceArg.astNode && ifaceArg.astNode.type,
+      //       objectArg.astNode && objectArg.astNode.type,
+      //     ],
+      //   );
+      // }
+      // TODO: validate default values?
 
     };
 
